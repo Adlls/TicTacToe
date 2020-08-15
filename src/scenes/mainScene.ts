@@ -1,12 +1,11 @@
 import "phaser";
-import {Cell} from "../cell";
+import {Cell, paramsCell} from "../cell";
 
 export class MainScene extends Phaser.Scene {
 
-     widthRect: number;
-     heightRect: number;
+
      countRect: number;
-     graphics: any;
+     graphics: Phaser.GameObjects.Graphics;
      cells: Array<Cell>;
 
     constructor() {
@@ -15,11 +14,32 @@ export class MainScene extends Phaser.Scene {
         });
     }
 
+    private initCells() {
+        let rectX: number = paramsCell.startX;
+        let rectY: number = paramsCell.startY;
+        for (let i = 1; i <= 5; i++) {
+            for (let j = 1; j <= 5; j++) {
+                rectX += paramsCell.sizeCell;
+                let cell = new Cell(rectX, rectY);
+                this.cells.push(cell);
+            }
+            rectX = paramsCell.startX;
+            rectY += paramsCell.sizeCell;
+        }
+    }
+
+    private drawCells() {
+        this.graphics.lineStyle(1.5, 0xffffff, 1);
+        for (let cell of this.cells) {
+            cell.drawCell(this.graphics);
+        }
+    }
+
     init(): void {
-        this.widthRect = 80;
-        this.heightRect = this.widthRect;
         this.countRect = 25;
         this.graphics = this.add.graphics();
+        this.cells = new Array<Cell>();
+        this.initCells();
     }
 
     preload(): void {
@@ -27,22 +47,7 @@ export class MainScene extends Phaser.Scene {
     }
 
     create(): void {
-
-        let rectX: number = 400;
-        let rectY: number = 80;
-        this.graphics.lineStyle(2, 0xffffff, 1);
-
-
-       for (let i = 1; i <= 5; i++) {
-           for (let j = 1; j <= 5; j++) {
-               //let rect = this.add.rectangle(rectX, rectY, this.widthRect, this.heightRect, 1);
-               this.graphics.strokeRect(rectX, rectY, this.widthRect, this.heightRect);
-               rectX += this.heightRect;
-           }
-           rectX = 400;
-           rectY += this.widthRect;
-       }
-
+        this.drawCells();
     }
 
     update(time: number): void {
