@@ -17,6 +17,7 @@ export class Cell {
         this.cross = false;
     }
 
+
     get getCellX(): number {
         return this.cellX;
     }
@@ -44,5 +45,15 @@ export class Cell {
 
     public drawCell(graphics: Phaser.GameObjects.Graphics) {
         graphics.strokeRect(this.cellX, this.cellY, paramsCell.sizeCell, paramsCell.sizeCell);
+    }
+
+    public belongsCell(targetX: number, targetY: number): boolean {
+        let cellX1: number = this.getCellX;
+        let cellX2: number = this.getCellX + paramsCell.sizeCell;
+        let cellY1: number = this.getCellY;
+        let cellY2: number = this.getCellY + paramsCell.sizeCell;
+
+        return targetX > cellX1 && targetX < cellX2
+                && targetY >= cellY1 && targetY < cellY2;
     }
 }
