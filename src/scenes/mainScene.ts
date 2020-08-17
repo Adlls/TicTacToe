@@ -59,10 +59,14 @@ export class MainScene extends Phaser.Scene {
 
     create(): void {
         this.drawCells();
+        //let isWin = (this.user as User).isWinner(this.cells);
+        //console.log(isWin);
     }
 
     update(time: number): void {
         this.user.doMove(this.AI as AI, this.cells, this.add, this.input);
         this.AI.doMove(this.user as User, this.cells, this.add);
+        let isWin = (this.user as User).isWinner(this.cells);
+        console.log(isWin);
     }
 }
