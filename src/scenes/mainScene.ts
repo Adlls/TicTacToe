@@ -46,44 +46,23 @@ export class MainScene extends Phaser.Scene {
         let index = 1;
         for (let cell of this.cells) {
             cell.drawCell(this.graphics);
-            console.log(index+" cell x y", cell.getCellX, cell.getCellY);
             index++;
         }
     }
 
-    checkCellByClick(x, y) {
-        for (let cell of this.cells) {
-            if (cell.belongsCell(x,y)) {
-                let cross =  this.add.image(
-                        cell.getCellX + (paramsCell.sizeCell/2),
-                        cell.getCellY + (paramsCell.sizeCell/2), "crossImage");
-
-                cross.setScale(0.5);
-            }
-
-        }
-    }
 
     preload(): void {
         this.load.image("crossImage","assets/cross.png");
+        this.load.image("circleImage", "assets/circle.png");
 
     }
 
     create(): void {
         this.drawCells();
-        this.input.on('pointerdown', function () {
-            console.log("x: ", this.input.x);
-            console.log("y: ", this.input.y);
-            this.checkCellByClick(this.input.x, this.input.y);
-        }, this)
     }
 
     update(time: number): void {
-
+        this.user.doMove(this.AI as AI, this.cells, this.add, this.input);
+        this.AI.doMove(this.user as User, this.cells, this.add);
     }
-
-    private onClick() {
-
-    }
-
 }

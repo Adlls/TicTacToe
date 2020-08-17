@@ -1,3 +1,4 @@
+import {Iplayer} from "./players/Iplayer";
 
 export enum paramsCell {
     sizeCell = 80,
@@ -46,6 +47,24 @@ export class Cell {
     public drawCell(graphics: Phaser.GameObjects.Graphics) {
         graphics.strokeRect(this.cellX, this.cellY, paramsCell.sizeCell, paramsCell.sizeCell);
     }
+
+    public drawCircleOrCrossByPlayer(player: Iplayer, addImage: Phaser.GameObjects.GameObjectFactory) {
+        if (player.forWhom == 'cross') {
+            let drawCross = addImage.image(
+                this.getCellX + (paramsCell.sizeCell / 2),
+                this.getCellY + (paramsCell.sizeCell / 2), "crossImage");
+            drawCross.setScale(0.5);
+            this.setCross = true;
+
+        } else if (player.forWhom == 'circle') {
+            let drawCircle = addImage.image(
+                this.getCellX + (paramsCell.sizeCell / 2),
+                this.getCellY + (paramsCell.sizeCell / 2), "circleImage");
+            drawCircle.setScale(0.5);
+            this.setCircle = true;
+        }
+    }
+
 
     public belongsCell(targetX: number, targetY: number): boolean {
         let cellX1: number = this.getCellX;
