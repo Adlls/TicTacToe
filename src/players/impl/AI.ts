@@ -1,14 +1,22 @@
 import {Iplayer} from "../Iplayer";
 import {User} from "./user";
 import {Cell, paramsCell} from "../../cell";
+import {GameRules} from "../../gameRules";
 
 export class AI implements Iplayer {
     readonly forWhom: string;
     private isTurn: boolean;
+    private countHorizontally: number;
+    private countVertical: number;
+    private countDiagonal: number;
+
 
     constructor() {
         this.isTurn = false;
         this.forWhom = "circle";
+        this.countHorizontally = 0;
+        this.countVertical = 0;
+        this.countDiagonal = 0;
     }
 
     getTurn(): boolean {
@@ -37,6 +45,15 @@ export class AI implements Iplayer {
                 }
             }
         }
+    }
+
+    isWinner(cells: Array<Cell>): boolean {
+        return GameRules.playerWin(
+            cells,
+            this.forWhom,
+            this.countHorizontally,
+            this.countVertical,
+            this.countDiagonal);
     }
 
 
