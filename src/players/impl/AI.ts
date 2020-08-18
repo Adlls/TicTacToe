@@ -32,12 +32,14 @@ export class AI implements Iplayer {
            input?: Phaser.Input.InputPlugin) {
 
         if (this.getTurn()) {
-            let randomX: number = Phaser.Math.Between(0,25*paramsCell.sizeCell);
-            let randomY: number = Phaser.Math.Between(0,25*paramsCell.sizeCell);
+            let randomX: number = Phaser.Math.Between(0,
+                GameRules.currentCountRectPerimeter*GameRules.currentCountRectPerimeter*paramsCell.sizeCell);
+            let randomY: number = Phaser.Math.Between(0,
+                GameRules.currentCountRectPerimeter*GameRules.currentCountRectPerimeter*paramsCell.sizeCell);
             for (let cell of cells) {
                 if (cell.belongsCell(randomX, randomY)) {
                     if (cell.isCross || cell.isCircle) return;
-                    console.log("AI сделал ход...");
+
                     cell.drawCircleOrCrossByPlayer(this, addImage);
                     this.setTurn(false);
                     enemy.setTurn(true);

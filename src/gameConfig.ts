@@ -7,7 +7,7 @@ import {FailScene} from "./scenes/failScene";
 export const gameConfig: GameConfig = {
     title: "Tic tac toe",
     width: "100%",
-    height: "90%",
+    height: "150px",
     parent: "game",
     backgroundColor: "#2b69bc",
     scene: [
