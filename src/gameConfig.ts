@@ -12,8 +12,8 @@ export const gameConfig: GameConfig = {
     backgroundColor: "#2b69bc",
     scene: [
          MainScene,
-         WinScene,
-         FailScene
+         FailScene,
+         WinScene
     ],
     physics: {
         default: "arcade",

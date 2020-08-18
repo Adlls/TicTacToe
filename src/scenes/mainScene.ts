@@ -64,10 +64,17 @@ export class MainScene extends Phaser.Scene {
     update(time: number): void {
         this.user.doMove(this.AI as AI, this.cells, this.add, this.input);
         this.AI.doMove(this.user as User, this.cells, this.add);
+        /*
         let isWinUser = this.user.isWinner(this.cells);
         let isWinAI = this.AI.isWinner(this.cells);
         console.log(isWinUser, " user win");
         console.log(isWinAI, " ai win");
+         */
+        if (this.user.isWinner(this.cells)) {
+            this.scene.start("winScene")
+        } else if (this.AI.isWinner(this.cells)) {
+            this.scene.start("failScene");
+        }
 
     }
 }
