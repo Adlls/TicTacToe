@@ -1,4 +1,4 @@
-## Tic tac toe"
+## Tic tac toe
 ### Дэплой: 
 `npm init` <br>
 `npm start` <br> <br>
