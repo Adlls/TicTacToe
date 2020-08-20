@@ -64,10 +64,12 @@ export class MainScene extends Phaser.Scene {
     }
 
     update(time: number): void {
+
         if (GameRules.currentCountRectPerimeter != paramsGrid.contRectExtended) {
             this.cells = GameRules.checkForExtensionInitCells(this.cells);
             this.drawCells();
         }
+
         if (this.user.isWinner(this.cells)) this.scene.start("winScene");
          else if (this.AI.isWinner(this.cells)) this.scene.start("failScene");
 

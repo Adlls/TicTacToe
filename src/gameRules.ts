@@ -28,31 +28,35 @@ export class GameRules {
        return countBound;
    }
 
-   private static expandGrid(cells: Array<Cell>): Array<Cell> {
+   private static expandGrid(oldCells: Array<Cell>): Array<Cell> {
+       let boundsRowsOfOldCells: Array<[number, number]> = this.shapeBoundsRows(oldCells);
        this.currentCountRectPerimeter = paramsGrid.contRectExtended;
-       let newCells: Array<Cell> = new Array<Cell>();
+       let newCells: Array<Cell> = new Array<Cell>(
+           /*paramsGrid.contRectExtended * paramsGrid.contRectExtended*/);
 
-       let indexOldCells: number = 0;
+       let indexCellBasic: number = 0;
+       let indexCellExtend: number = 0;
        let rectX: number = paramsCell.startX;
        let rectY: number = paramsCell.startY;
-       for (let i = 1; i <= GameRules.currentCountRectPerimeter; i++) {
-           for (let j = 1; j <= GameRules.currentCountRectPerimeter; j++) {
+       let i = 0;
+       let j = 0;
+       for ( i = 0; i < GameRules.currentCountRectPerimeter; i++) {
+           for (j = 0; j < GameRules.currentCountRectPerimeter; j++) {
+               indexCellExtend = paramsGrid.contRectExtended * i + j;
+               indexCellBasic = paramsGrid.countRectBasic * i + j;
                rectX += paramsCell.sizeCell;
-               let cell: Cell;
 
-              if (typeof cells[indexOldCells] !== 'undefined') {
-               if (cells[indexOldCells].isCross || cells[indexOldCells].isCircle) {
-                   cells[indexOldCells].setCellX = rectX;
-                   cells[indexOldCells].setCellY = rectY;
-                   cell = cells[indexOldCells];
-               } else {
-                   cell = new Cell(rectX, rectY);
-               }
+              if (typeof boundsRowsOfOldCells[i] !== 'undefined') {
+                  if (boundsRowsOfOldCells[i][1] >= indexCellBasic) {
+                      oldCells[indexCellBasic].setCellX = rectX;
+                      oldCells[indexCellBasic].setCellY = rectY;
+                      newCells[indexCellExtend] = oldCells[indexCellBasic];
+                  } else {
+                      newCells[indexCellExtend] = new Cell(rectX, rectY);
+                  }
               } else {
-                   cell = new Cell(rectX, rectY);
-               }
-               newCells.push(cell);
-               indexOldCells++;
+                 newCells[indexCellExtend] = new Cell(rectX, rectY);
+              }
            }
            rectX = paramsCell.startX;
            rectY += paramsCell.sizeCell;
@@ -129,6 +133,7 @@ export class GameRules {
            boundRows[indexBound] = [j, j + GameRules.currentCountRectPerimeter - 1];
            indexBound++;
        }
+
        return boundRows;
    }
 
