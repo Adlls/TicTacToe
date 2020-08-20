@@ -33,9 +33,9 @@ export class AI implements Iplayer {
 
         if (this.getTurn()) {
             let randomX: number = Phaser.Math.Between(0,
-                GameRules.currentCountRectPerimeter*GameRules.currentCountRectPerimeter*paramsCell.sizeCell);
+                cells[cells.length - 1].getCellX + paramsCell.sizeCell);
             let randomY: number = Phaser.Math.Between(0,
-                GameRules.currentCountRectPerimeter*GameRules.currentCountRectPerimeter*paramsCell.sizeCell);
+                cells[cells.length - 1].getCellY + paramsCell.sizeCell);
             for (let cell of cells) {
                 if (cell.belongsCell(randomX, randomY)) {
                     if (cell.isCross || cell.isCircle) return;

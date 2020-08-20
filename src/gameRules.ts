@@ -31,26 +31,27 @@ export class GameRules {
    private static expandGrid(oldCells: Array<Cell>): Array<Cell> {
        let boundsRowsOfOldCells: Array<[number, number]> = this.shapeBoundsRows(oldCells);
        this.currentCountRectPerimeter = paramsGrid.contRectExtended;
+
        let newCells: Array<Cell> = new Array<Cell>(
-           /*paramsGrid.contRectExtended * paramsGrid.contRectExtended*/);
+           paramsGrid.contRectExtended * paramsGrid.contRectExtended);
 
        let indexCellBasic: number = 0;
        let indexCellExtend: number = 0;
        let rectX: number = paramsCell.startX;
        let rectY: number = paramsCell.startY;
-       let i = 0;
-       let j = 0;
-       for ( i = 0; i < GameRules.currentCountRectPerimeter; i++) {
-           for (j = 0; j < GameRules.currentCountRectPerimeter; j++) {
+
+       for ( let i = 0; i < GameRules.currentCountRectPerimeter; i++) {
+           for (let j = 0; j < GameRules.currentCountRectPerimeter; j++) {
+
                indexCellExtend = paramsGrid.contRectExtended * i + j;
                indexCellBasic = paramsGrid.countRectBasic * i + j;
                rectX += paramsCell.sizeCell;
 
               if (typeof boundsRowsOfOldCells[i] !== 'undefined') {
                   if (boundsRowsOfOldCells[i][1] >= indexCellBasic) {
-                      oldCells[indexCellBasic].setCellX = rectX;
-                      oldCells[indexCellBasic].setCellY = rectY;
                       newCells[indexCellExtend] = oldCells[indexCellBasic];
+                      newCells[indexCellExtend].setCellX = rectX;
+                      newCells[indexCellExtend].setCellY = rectY;
                   } else {
                       newCells[indexCellExtend] = new Cell(rectX, rectY);
                   }

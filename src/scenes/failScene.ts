@@ -22,20 +22,20 @@ export class FailScene extends Phaser.Scene {
     create(): void {
         this.title = this.add.text(
             this.cameras.main.centerX - 228,
-            this.cameras.main.centerY - 64,
+            64,
             this.titleText, {
                 font: '64px',
                 fill: '#ffffff'
             });
         this.buttonAgain = this.add.text(
-            this.cameras.main.centerX - 110,
-            this.cameras.main.centerY + 64,
+            this.cameras.main.centerX - 120,
+            180,
             this.titleButtonAgain, {
                 backgroundColor: "#f7ae4a",
                 color: "#ffffff",
                 padding: 20,
                 borderRadius: '50px',
-                font: '22px',
+                font: '22px Georgia',
                 align: 'center',
             }
         );

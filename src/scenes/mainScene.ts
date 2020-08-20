@@ -21,6 +21,7 @@ export class MainScene extends Phaser.Scene {
     }
 
     init(): void {
+        GameRules.currentCountRectPerimeter = paramsGrid.countRectBasic;
         this.countRect = 25;
         this.graphics = this.add.graphics();
         this.cells = new Array<Cell>();
@@ -32,8 +33,8 @@ export class MainScene extends Phaser.Scene {
     private initCells() {
         let rectX: number = paramsCell.startX;
         let rectY: number = paramsCell.startY;
-        for (let i = 1; i <= GameRules.currentCountRectPerimeter; i++) {
-            for (let j = 1; j <= GameRules.currentCountRectPerimeter; j++) {
+        for (let i = 0; i < GameRules.currentCountRectPerimeter; i++) {
+            for (let j = 0; j < GameRules.currentCountRectPerimeter; j++) {
                 rectX += paramsCell.sizeCell;
                 let cell = new Cell(rectX, rectY);
                 this.cells.push(cell);
@@ -67,6 +68,7 @@ export class MainScene extends Phaser.Scene {
 
         if (GameRules.currentCountRectPerimeter != paramsGrid.contRectExtended) {
             this.cells = GameRules.checkForExtensionInitCells(this.cells);
+
             this.drawCells();
         }
 
