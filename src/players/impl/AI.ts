@@ -2,6 +2,8 @@ import {Iplayer} from "../Iplayer";
 import {User} from "./user";
 import {Cell, paramsCell} from "../../cell";
 import {GameRules} from "../../gameRules";
+import {ContextAI} from "../../strategyAI/contextAI";
+import {SimpleStrategyAI} from "../../strategyAI/simpleStrategyAI";
 
 export class AI implements Iplayer {
     readonly forWhom: string;
@@ -32,12 +34,14 @@ export class AI implements Iplayer {
            input?: Phaser.Input.InputPlugin) {
 
         if (this.getTurn()) {
-            let randomX: number = Phaser.Math.Between(0,
-                cells[cells.length - 1].getCellX + paramsCell.sizeCell);
-            let randomY: number = Phaser.Math.Between(0,
-                cells[cells.length - 1].getCellY + paramsCell.sizeCell);
+
+            const context = new ContextAI(new SimpleStrategyAI());
+
+            let x: number = context.doSomeStrategy(cells).x;
+            let y: number = context.doSomeStrategy(cells).y;
+
             for (let cell of cells) {
-                if (cell.belongsCell(randomX, randomY)) {
+                if (cell.belongsCell(x, y)) {
                     if (cell.isCross || cell.isCircle) return;
 
                     cell.drawCircleOrCrossByPlayer(this, addImage);
