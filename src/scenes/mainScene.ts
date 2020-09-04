@@ -4,6 +4,7 @@ import {Iplayer} from "../players/Iplayer";
 import {User} from "../players/impl/user";
 import {AI} from "../players/impl/AI";
 import {GameRules, paramsGrid} from "../gameRules";
+import Game = Phaser.Game;
 
 export class MainScene extends Phaser.Scene {
 
@@ -31,7 +32,8 @@ export class MainScene extends Phaser.Scene {
     }
 
     private initCells() {
-        let rectX: number = paramsCell.startX;
+
+        let rectX: number = this.cameras.main.centerX - paramsCell.sizeCell*(GameRules.currentCountRectPerimeter/2 + 1);
         let rectY: number = paramsCell.startY;
         for (let i = 0; i < GameRules.currentCountRectPerimeter; i++) {
             for (let j = 0; j < GameRules.currentCountRectPerimeter; j++) {
@@ -39,7 +41,7 @@ export class MainScene extends Phaser.Scene {
                 let cell = new Cell(rectX, rectY);
                 this.cells.push(cell);
             }
-            rectX = paramsCell.startX;
+            rectX = this.cameras.main.centerX - paramsCell.sizeCell*(GameRules.currentCountRectPerimeter/2 + 1);
             rectY += paramsCell.sizeCell;
         }
     }
@@ -67,7 +69,7 @@ export class MainScene extends Phaser.Scene {
     update(time: number): void {
 
         if (GameRules.currentCountRectPerimeter != paramsGrid.contRectExtended) {
-            this.cells = GameRules.checkForExtensionInitCells(this.cells);
+            this.cells = GameRules.checkForExtensionInitCells(this.cells, this.cameras);
 
             this.drawCells();
         }

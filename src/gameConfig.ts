@@ -11,9 +11,9 @@ export const gameConfig: GameConfig = {
     parent: "game",
     backgroundColor: "#2b69bc",
     scene: [
-         MainScene,
-         FailScene,
-         WinScene
+        MainScene,
+        FailScene,
+        WinScene
     ],
     physics: {
         default: "arcade",

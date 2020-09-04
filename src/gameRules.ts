@@ -28,7 +28,7 @@ export class GameRules {
        return countBound;
    }
 
-   private static expandGrid(oldCells: Array<Cell>): Array<Cell> {
+   private static expandGrid(oldCells: Array<Cell>, cameras: Phaser.Cameras.Scene2D.CameraManager): Array<Cell> {
        let boundsRowsOfOldCells: Array<[number, number]> = this.shapeBoundsRows(oldCells);
        this.currentCountRectPerimeter = paramsGrid.contRectExtended;
 
@@ -37,7 +37,7 @@ export class GameRules {
 
        let indexCellBasic: number = 0;
        let indexCellExtend: number = 0;
-       let rectX: number = paramsCell.startX;
+       let rectX: number = cameras.main.centerX - paramsCell.sizeCell*(paramsGrid.countRectBasic/2 + 1);
        let rectY: number = paramsCell.startY;
 
        for ( let i = 0; i < GameRules.currentCountRectPerimeter; i++) {
@@ -59,13 +59,13 @@ export class GameRules {
                  newCells[indexCellExtend] = new Cell(rectX, rectY);
               }
            }
-           rectX = paramsCell.startX;
+           rectX = cameras.main.centerX - paramsCell.sizeCell*(paramsGrid.countRectBasic/2 + 1);
            rectY += paramsCell.sizeCell;
        }
        return newCells;
    }
 
-   public static checkForExtensionInitCells(cells: Array<Cell>): Array<Cell> {
+   public static checkForExtensionInitCells(cells: Array<Cell>, cameras: Phaser.Cameras.Scene2D.CameraManager): Array<Cell> {
        let countFilledCells = 0;
        for (let cell of cells) {
            if (cell.isCircle || cell.isCross) countFilledCells++;
@@ -74,7 +74,7 @@ export class GameRules {
        let fillIndex = countFilledCells/cells.length;
 
        if (fillIndex > 0.6) {
-           return this.expandGrid(cells);
+           return this.expandGrid(cells, cameras);
        } else {
            return cells;
        }

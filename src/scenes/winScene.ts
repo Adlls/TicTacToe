@@ -19,24 +19,19 @@ export class WinScene extends Phaser.Scene {
     }
 
     create(): void {
-        this.title = this.add.text(
-            this.cameras.main.centerX - 128,
-            64,
-            this.titleText, {
-            font: '64px',
-            fill: '#ffffff'
-        });
+        let styleText = { font: "bold 32px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+        let styleButton = {
+            backgroundColor: "#f7ae4a",
+            color: "#ffffff", padding: 20,
+            borderRadius: '50px',
+            font: 'bold 24px Arial',
+            align: 'center'
+        };
+
+        this.title = this.add.text(this.cameras.main.centerX - this.titleText.length/2 * 32, 100, this.titleText, styleText);
+
         this.buttonAgain = this.add.text(
-            this.cameras.main.centerX - 120,
-            200,
-            this.titleButtonAgain, {
-                backgroundColor: "#f7ae4a",
-                color: "#ffffff",
-                padding: 20,
-                borderRadius: '50px',
-                font: '22px Georgia',
-                align: 'center',
-            }
+            this.cameras.main.centerX - this.titleButtonAgain.length/2 * 24, 200, this.titleButtonAgain, styleButton
         );
 
 

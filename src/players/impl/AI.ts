@@ -4,6 +4,7 @@ import {Cell, paramsCell} from "../../cell";
 import {GameRules} from "../../gameRules";
 import {ContextAI} from "../../strategyAI/contextAI";
 import {SimpleStrategyAI} from "../../strategyAI/simpleStrategyAI";
+import {HeavyStrategy} from "../../strategyAI/heavyStrategy";
 
 export class AI implements Iplayer {
     readonly forWhom: string;
@@ -35,7 +36,7 @@ export class AI implements Iplayer {
 
         if (this.getTurn()) {
 
-            const context = new ContextAI(new SimpleStrategyAI());
+            const context = new ContextAI(new HeavyStrategy());
 
             let x: number = context.doSomeStrategy(cells).x;
             let y: number = context.doSomeStrategy(cells).y;
